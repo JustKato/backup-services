@@ -8,7 +8,7 @@ send_discord_notification() {
     if [ -n "$DISCORD_WEB_HOOK" ]; then
         curl \
             -H "Content-Type: application/json" \
-            -d "{ \"content\":\"\", \"embeds\":[{ \"title\":\"Vaultwarden Backup\", \"description\":\"${message}\", \"color\":${color}} ]}" \
+            -d "{ \"content\":\"\", \"embeds\":[{ \"title\":\"${PROGRAM_NAME}\", \"description\":\"${message}\", \"color\":${color}} ]}" \
             $DISCORD_WEB_HOOK
     fi
 }
