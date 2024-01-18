@@ -4,7 +4,7 @@
 # Determine the directory of the script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-PROGRAM_NAME="Gitea Backup Script"
+PROGRAM_NAME="Vaultwarden Backup"
 
 ### [ Imports ] ###
 # Import Colors
