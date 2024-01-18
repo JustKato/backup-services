@@ -112,7 +112,7 @@ delete_old_gdrive_backups() {
 
 ### [ Main ] ###
 echo -e "${YELLOW}Starting ${PROGRAM_NAME}...${NC}"
-send_discord_notification "Starting Vaultwarden backup..." "16776960" # Yellow color
+send_discord_notification "Starting Gitea backup..." "16776960" # Yellow color
 
 check_required_programs "$SCRIPT_DIR/required_programs.txt"
 

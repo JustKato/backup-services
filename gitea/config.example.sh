@@ -12,7 +12,7 @@ BACKUP_SOURCE_PATH=/home/x/services/gitea/backups
 KEEP_BACKUP_COUNT=3
 
 # Discord Settings
-DISCORD_WEBHOOK=
+DISCORD_WEB_HOOK=
 
 # Google Drive Settings
 GOOGLE_DRIVE_FOLDER_ID=
