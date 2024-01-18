@@ -1,0 +1,4 @@
+*gdrive
+7zz
+sqlite3
+*curl

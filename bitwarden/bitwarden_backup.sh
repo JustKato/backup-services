@@ -4,47 +4,17 @@
 # Determine the directory of the script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-### [ Variables ] ###
+PROGRAM_NAME="Gitea Backup Script"
+
+### [ Imports ] ###
+# Import Colors
+source "$SCRIPT_DIR/../lib/colors.sh"
 # Import configuration
 source "$SCRIPT_DIR/config.sh"
-
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-NC='\033[0m' # No Color
+# Import Functions
+source "$SCRIPT_DIR/../lib/functions.sh"
 
 ### [ Functions ] ###
-check_required_programs() {
-    local missing=0
-    for program in gdrive 7zz sqlite3 curl; do
-        if ! command -v $program &> /dev/null; then
-            echo -e "${RED}Error: Required program '$program' is not installed.${NC}" >&2
-            missing=1
-        fi
-    done
-
-    if [ $missing -ne 0 ]; then
-        local ERR_MSG="One or more required programs are missing."
-        send_discord_notification "$ERR_MSG" "16711680"
-        echo -e "${RED}$ERR_MSG${NC}" >&2
-        exit 1
-    fi
-}
-
-send_discord_notification() {
-    local message=$1
-    local color=$2
-
-    # Check if we should send discord notifications
-    if [ -n "$DISCORD_WEB_HOOK" ]; then
-        curl \
-            -H "Content-Type: application/json" \
-            -d "{ \"content\":\"\", \"embeds\":[{ \"title\":\"Vaultwarden Backup\", \"description\":\"${message}\", \"color\":${color}} ]}" \
-            $DISCORD_WEB_HOOK
-    fi
-}
-
 get_7zip_password() {
     $SCRIPT_DIR/bitwarden_backup_password_decrypt.sh
 }
@@ -132,10 +102,10 @@ delete_old_gdrive_backups() {
 }
 
 ### [ Main ] ###
-echo -e "${YELLOW}Starting Vaultwarden backup...${NC}"
+echo -e "${YELLOW}Starting ${PROGRAM_NAME}...${NC}"
 send_discord_notification "Starting Vaultwarden backup..." "16776960" # Yellow color
 
-check_required_programs
+check_required_programs "$SCRIPT_DIR/required_programs.txt"
 
 backup_sqlite_database
 compress_and_encrypt_backup
