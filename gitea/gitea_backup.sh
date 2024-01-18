@@ -25,7 +25,7 @@ backup_from_docker() {
         log "Gitea backup created successfully."
     else
         error "Failed to create Gitea backup."
-        send_discord_notification "Failed to create Gitea backup."
+        send_discord_notification "Failed to create Gitea backup." "16711680"
         exit 1
     fi
 
@@ -34,7 +34,7 @@ backup_from_docker() {
 
     if [ -z "$BACKUP_FILE" ]; then
         error "Backup file not found."
-        send_discord_notification "Backup file not found."
+        send_discord_notification "Backup file not found." "16711680"
         exit 1
     fi
 
@@ -91,13 +91,13 @@ delete_old_gdrive_backups() {
                 if [ -n "$BACKUP_ID" ]; then
                     gdrive files delete $BACKUP_ID
                     if [ $? -eq 0 ]; then
-                        local MSG_X="Deleted old backup with ID $BACKUP_ID from Google Drive."
-                        log "$MSG_X"
-                        send_discord_notification "$MSG_X" "16776960"
+                        local MSG_X="Deleted old backup with ID ${BACKUP_ID} from Google Drive."
+                        log "${MSG_X}"
+                        send_discord_notification "${MSG_X}" "16776960"
                     else
                         local MSG_X="Failed to delete backup with ID $BACKUP_ID from Google Drive."
-                        log "$MSG_X"
-                        send_discord_notification "$MSG_X" "16711680"
+                        log "${MSG_X}"
+                        send_discord_notification "${MSG_X}" "16711680"
                     fi
                 fi
             done
@@ -128,4 +128,4 @@ delete_old_gdrive_backups
 
 # Final message
 log "Backup process completed."
-send_discord_notification "Backup process completed."
+send_discord_notification "Backup process completed." "65280"
