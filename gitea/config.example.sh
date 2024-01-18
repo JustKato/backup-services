@@ -16,3 +16,6 @@ DISCORD_WEBHOOK=
 
 # Google Drive Settings
 GOOGLE_DRIVE_FOLDER_ID=
+# The amount of backups to be kept in google drive, this has nothing to do with time it's just a set number
+# and will, logically, remove the oldest first.
+GOOGLE_DRIVE_KEEP_BACKUP_COUNT=16
