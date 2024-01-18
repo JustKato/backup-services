@@ -38,6 +38,18 @@ backup_from_docker() {
         exit 1
     fi
 
+    # Keep only the last $KEEP_BACKUP_COUNT backups
+    if [ -n "$KEEP_BACKUP_COUNT" ]; then
+        # Get the number of backup files
+        BACKUP_COUNT=$(ls -1 $BACKUP_SOURCE_PATH/gitea-dump-*.zip | wc -l)
+
+        # Check if the current number of backups exceeds the limit
+        if [ "$BACKUP_COUNT" -gt "$KEEP_BACKUP_COUNT" ]; then
+            # Remove the oldest files
+            ls -1tr $BACKUP_SOURCE_PATH/gitea-dump-*.zip | head -n -$KEEP_BACKUP_COUNT | xargs -d '\n' rm -f
+        fi
+    fi
+
     log "Backup file $BACKUP_FILE created."
 }
 
