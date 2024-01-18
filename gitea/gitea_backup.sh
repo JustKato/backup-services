@@ -21,7 +21,7 @@ backup_from_docker() {
     GITEA_DOCKER_CONTAINER=$(docker ps -qf name="${GITEA_CONTAINER_NAME}")
 
     # Run the backup process
-    if docker exec -w $GITEA_BACKUP_CONTAINER_LOCATION -u git $GITEA_DOCKER_CONTAINER bash -c "/usr/local/bin/gitea dump -c $GITEA_CONF_PATH"; then
+    if docker exec -w $GITEA_BACKUP_CONTAINER_LOCATION -u git $GITEA_DOCKER_CONTAINER bash -c "/usr/local/bin/gitea dump -c \"$GITEA_CONF_PATH\""; then
         log "Gitea backup created successfully."
     else
         error "Failed to create Gitea backup."
