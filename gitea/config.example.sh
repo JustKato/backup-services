@@ -1,6 +1,6 @@
 
 # The name of the gitea container, this is required.
-GITEA_CONTAINER_NAME="gitea_app"
+GITEA_CONTAINER_NAME="^gitea_app$" # Please keep in mind this is a regex, so if you are putting in the exact name prepend with ^ and append with $
 # An absolute path to the gitea app.ini from within the docker container
 GITEA_CONF_PATH=/data/gitea/conf/app.ini
 # The path where WITHING THE CONTAINER the dump will be placed
