@@ -59,7 +59,7 @@ upload_to_google_drive() {
     if [ -n "$GOOGLE_DRIVE_FOLDER_ID" ] && [ -n "$BACKUP_FILE" ]; then
         log "Uploading backup to google drive."
 
-        gdrive upload --parent $GOOGLE_DRIVE_FOLDER_ID $BACKUP_FILE
+        gdrive files upload --parent $GOOGLE_DRIVE_FOLDER_ID $BACKUP_FILE
         if [ $? -eq 0 ]; then
             log "Backup file uploaded to Google Drive."
             send_discord_notification "Backup file uploaded to Google Drive." "65280"
@@ -75,7 +75,7 @@ upload_to_google_drive() {
 
 delete_old_gdrive_backups() {
     if [ -n "$GOOGLE_DRIVE_FOLDER_ID" ] && [ -n "$GOOGLE_DRIVE_KEEP_BACKUP_COUNT" ]; then
-        GCLOUD_BACKUPS=$(gdrive list --query "'$GOOGLE_DRIVE_FOLDER_ID' in parents" --order "createdTime" --no-header | awk '{print $1}')
+        GCLOUD_BACKUPS=$(gdrive files list --query "'$GOOGLE_DRIVE_FOLDER_ID' in parents" --order "createdTime" --no-header | awk '{print $1}')
         BACKUP_COUNT=$(echo "$GCLOUD_BACKUPS" | wc -l)
 
         log "Deleting old gdrive backups."
@@ -86,7 +86,7 @@ delete_old_gdrive_backups() {
 
             echo "$DELETE_BACKUPS" | while read -r BACKUP_ID; do
                 if [ -n "$BACKUP_ID" ]; then
-                    gdrive delete $BACKUP_ID
+                    gdrive files delete $BACKUP_ID
                     if [ $? -eq 0 ]; then
                         local MSG_X="Deleted old backup with ID ${BACKUP_ID} from Google Drive."
                         log "${MSG_X}"
