@@ -75,7 +75,7 @@ upload_to_google_drive() {
 
 delete_old_gdrive_backups() {
     if [ -n "$GOOGLE_DRIVE_FOLDER_ID" ] && [ -n "$GOOGLE_DRIVE_KEEP_BACKUP_COUNT" ]; then
-        GCLOUD_BACKUPS=$(gdrive files list --query "'$GOOGLE_DRIVE_FOLDER_ID' in parents" --order "createdTime" --no-header | awk '{print $1}')
+        GCLOUD_BACKUPS=$(gdrive files list --parent $GOOGLE_DRIVE_FOLDER_ID --skip-header --order-by "createdTime asc" | awk '{print $1}')
         BACKUP_COUNT=$(echo "$GCLOUD_BACKUPS" | wc -l)
 
         log "Deleting old gdrive backups."
